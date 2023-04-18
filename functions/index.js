@@ -55,14 +55,15 @@ exports.GenAESkey = functions.https.onCall((data, context) => {
     try{
       const {roomAESkey,participants} =data //participants is the map object from the selected participants in creategroup and the aes key
       const Aeskeys = {}
-       return await Promise.all(Array.from(participants.values()).map(async (user)=>{
+      const success=  await Promise.all(Array.from(participants.values()).map(async (user)=>{
         const encryptedAESkey = await EncryptAESkey(user.RSApublicKey ,roomAESkey )
         Aeskeys[user.email] = encryptedAESkey
-      })
-      ).then(res => {
-        console.log(Aeskeys)
+        })
+      )
+      if(success){
         return Aeskeys
-      })
+      }
+      
 
         
         }catch(err){
