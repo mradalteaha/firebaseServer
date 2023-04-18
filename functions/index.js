@@ -57,9 +57,10 @@ exports.GenAESkey = functions.https.onCall((data, context) => {
       const Aeskeys = {}
        return await Promise.all(Array.from(participants.values()).map(async (user)=>{
         const encryptedAESkey = await EncryptAESkey(user.RSApublicKey ,roomAESkey )
-        Aeskeys[user.uid] = encryptedAESkey
+        Aeskeys[user.email] = encryptedAESkey
       })
       ).then(res => {
+        console.log(Aeskeys)
         return Aeskeys
       })
 
