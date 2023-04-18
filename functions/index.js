@@ -33,3 +33,18 @@ exports.Genkey = functions.https.onCall((data, context) => {
         }
   });
 
+exports.GenAESkey = functions.https.onCall((data, context) => {
+    functions.logger.info("Genkey logs!", {structuredData: true});
+    try{
+
+      var sharedSecret = crypto.randomBytes(8); // 128-bits === 16-bytes
+
+      var textSecret = sharedSecret.toString('hex');
+          return {"AES":textSecret}
+        
+        }catch(err){
+        console.log(err)
+        return {"error":err}
+        }
+  });
+
